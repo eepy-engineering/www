@@ -1,0 +1,167 @@
+@font-face {
+  font-family: "Fira Code";
+  src: url("/FiraCode/FiraCodeNerdFont-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Fira Code";
+  font-weight: bold;
+  src: url("/FiraCode/FiraCodeNerdFont-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Fira Code";
+  font-weight: 500;
+  src: url("/FiraCode/FiraCodeNerdFont-Medium.ttf");
+}
+
+@font-face {
+  font-family: "Fira Code";
+  font-weight: 600;
+  src: url("/FiraCode/FiraCodeNerdFont-SemiBold.ttf");
+}
+
+@font-face {
+  font-family: "Fira Code";
+  font-weight: lighter;
+  src: url("/FiraCode/FiraCodeNerdFont-Light.ttf");
+}
+
+* {
+  font-family: "Fira Code", monospace;
+}
+
+@import "tailwindcss";
+
+@theme {
+  --color-theme-light: #efecff;
+  --color-theme-dark: #b6a7ff;
+  --color-dark-theme-light: #282D3F;
+  --color-dark-theme-dark: #161923;
+}
+
+@layer base, utils, components;
+
+@import "@webtui/css/base.css";
+
+/* Utils */
+@import "@webtui/css/utils/box.css";
+
+/* Components */
+@import "@webtui/css/components/badge.css";
+@import "@webtui/css/components/button.css";
+@import "@webtui/css/components/input.css";
+@import "@webtui/css/components/popover.css";
+@import "@webtui/css/components/typography.css";
+
+/* NerdFont */
+@import "@webtui/plugin-nf";
+
+@layer base {
+  :root {
+    --background0: var(--color-theme-light);
+    --background1: #e1dbff;
+    --background2: #cbc0ff;
+    --background3: #b6a7ff;
+
+    --foreground0: #000;
+    --foreground1: #444;
+    --foreground2: #888;
+  }
+
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background0: var(--color-dark-theme-dark);
+      --background1: #1f2331;
+      --background2: var(--color-dark-theme-light);
+      --background3: #373F59;
+
+      --foreground0: #d1beef;
+      --foreground1: #A898C2;
+      --foreground2: #7d7092;
+    }
+  }
+}
+
+@layer utils {
+
+  column,
+  [is-~="column"] {
+    flex-direction: column;
+  }
+
+  row,
+  column,
+  [is-~="row"],
+  [is-~="column"] {
+    display: flex;
+
+    &[gap-~="1"] {
+      column-gap: 1ch;
+      row-gap: 1lh;
+    }
+
+    &[gap-~="2"] {
+      column-gap: 2ch;
+      row-gap: 2lh;
+    }
+
+    &[gap-~="4"] {
+      column-gap: 4ch;
+      row-gap: 4lh;
+    }
+
+    &[self-~="grow"] {
+      flex-grow: 1;
+    }
+
+    &[self-~="!grow"] {
+      flex-grow: 0;
+    }
+
+    &[self-~="shrink"] {
+      flex-shrink: 1;
+    }
+
+    &[self-~="!shrink"] {
+      flex-shrink: 0;
+    }
+
+    &[self-~="!basis"] {
+      flex-basis: 0;
+    }
+
+    &[align-^="start"] {
+      align-items: flex-start;
+    }
+
+    &[align-^="end"] {
+      align-items: flex-end;
+    }
+
+    &[align-^="center"] {
+      align-items: center;
+    }
+
+    &[align-^="stretch"] {
+      align-items: stretch;
+    }
+
+    &[align-$="between"] {
+      justify-content: space-between;
+    }
+
+    &[align-$="start"] {
+      justify-content: flex-start;
+    }
+
+    &[align-$="end"] {
+      justify-content: flex-end;
+    }
+
+    &[align-$="center"] {
+      justify-content: center;
+    }
+  }
+}
