@@ -34,7 +34,10 @@
   }
 
   .scanlines1 {
-    height: 100%;
+    position: sticky;
+    top: 0;
+    left: 0;
+    height: 100vh;
     pointer-events: none;
     pointer-events: none;
     z-index: 1000;
@@ -48,7 +51,10 @@
   }
 
   .scanlines2 {
-    height: 100%;
+    position: sticky;
+    top: 0;
+    left: 0;
+    height: 100vh;
     pointer-events: none;
     z-index: 1000;
     background-image: url(/overlay2.png);

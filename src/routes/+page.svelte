@@ -1,5 +1,13 @@
 <script lang="ts">
   import Banner from "$lib/component/banner/banner.svelte";
+  import Highlight from "$lib/component/highlight.svelte";
+  import Fa from "svelte-fa";
+  import Wave from "./wave.svelte";
+  import { faEnvelope, faHeart } from "@fortawesome/free-solid-svg-icons";
+  import { faDiscord } from "@fortawesome/free-brands-svg-icons";
+  import Box from "$lib/component/box.svelte";
+  import Badge from "$lib/component/badge.svelte";
+  import PersonalLink from "$lib/component/personal_link.svelte";
 </script>
 
 <Banner />
@@ -13,106 +21,99 @@
   blurb1: string,
   blurb2: string,
 )}
-  <a
-    href={link}
-    is-="column"
-    align-="end"
-    class="member"
-    box-="round contain:!top"
-  >
-    <row align-="end">
-      <strong is-="badge" class="badge">{tag}</strong>
-    </row>
-    <row>
-      <img src={profile_icon} alt="profile" />
-      <column class="profile-info" self-="!basis grow">
-        <h1>{name}</h1>
-        <i>{pronouns}</i>
-        <p class="blurb" style:font-weight="500">{blurb1}</p>
-        <p class="blurb" style:font-weight="500">{blurb2}</p>
-      </column>
-    </row>
-  </a>
-{/snippet}
-
-{#snippet highlight(
-  tag: string,
-  title: string,
-  subtitle: string,
-  link: string,
-  description: string,
-  tags: string[],
-)}
-  <a
-    href={link}
-    is-="column"
-    align-="start"
-    class="highlight"
-    box-="round contain:!top"
-  >
-    <row align-="end" style:gap="1ch">
-      <strong is-="badge" class="badge">{tag}</strong>
-      {#each tags as tag}
-        <p is-="badge" class="badge" variant-="foreground1" cap-="round">
-          <i
-            style:z-index="10"
-            style:position="relative"
-            style:left="-0.125ch"
-            style:font-weight="500"
-          >
-            {tag}
-          </i>
-        </p>
-      {/each}
-    </row>
-    <column class="highlight-info" self-="!basis grow">
-      <h1>{title}</h1>
-      <h2>{subtitle}</h2>
-      <p>{description}</p>
-    </column>
+  <a href={link} class="member">
+    <Box>
+      {#snippet top()}
+        <row align-="end">
+          <Badge><b>{tag}</b></Badge>
+        </row>
+      {/snippet}
+      <row>
+        <img src={profile_icon} alt="profile" />
+        <column class="profile-info" self-="!basis grow">
+          <h1>{name}</h1>
+          <i>{pronouns}</i>
+          <p class="blurb" style:font-weight="500">{blurb1}</p>
+          <p class="blurb" style:font-weight="500">{blurb2}</p>
+        </column>
+      </row>
+    </Box>
   </a>
 {/snippet}
 
 <column align-="center" style:gap="1lh">
-  <div box-="round contain:!top" class="ようこぞ" style:width="131ch">
-    <row align-="start">
-      <b is-="badge" class="badge" variant-="background0"
-        >&lt; welcome.md &gt;</b
-      >
-    </row>
-    <p style:font-weight="500">
-      We're a software collective of 3 members hoping to make software better
-      for everyone.
-    </p>
-  </div>
   <row align-="start center" items-="start" style:gap="1ch">
     <column class="highlights">
-      {@render highlight(
-        "Featured Project",
-        "Lorem ipsum dolor",
-        "sit amet, consectetur adipiscing elit.",
-        "/projects/demo-0",
-        "",
-        ["#project", "#natoque"],
-      )}
-      {@render highlight(
-        "Featured Project",
-        "Quisque dignissim quam et",
-        "mauris facilisis, et imperdiet urna iaculis.",
-        "/projects/pble",
-        "",
-        ["#project", "#magnis"],
-      )}
-      {@render highlight(
-        "Featured Article",
-        "Vivamus volutpat",
-        "tellus vel tempus tempor, nisi nunc posuere velit, a sagittis nulla turpis eget eros.",
-        "/projects/pble",
-        "",
-        ["#hot-takes", "#natoque"],
-      )}
+      <Box width={80}>
+        {#snippet top()}
+          <Badge variant="background0"><b>&lt; welcome.md &gt;</b></Badge>
+        {/snippet}
+
+        <h1 style:display="flex" style:flex-direction="row" style:gap="1ch">
+          <span style:padding-top="6px"><Wave size={26} /></span>
+          Welcome to eepy.engineering!
+        </h1>
+        <br />
+
+        <p style:font-weight="500">
+          We're a collective of engineers building software and writing about
+          the world around us. We were kids who couldn't stop asking "why?". We
+          took apart our toys to see what makes them tick, and grew up to be
+          engineers who do the same with the tools we use, the games we play,
+          and the lives we live.
+        </p>
+        <br />
+
+        <p style:font-weight="500">
+          Here you'll find a collection of projects we've worked on (both
+          personal and for the collective), as well as articles we've written to
+          document our journey. There's also other stuff scattered around the
+          website, like member profiles, experiments, and games.
+        </p>
+        <br />
+
+        <p style:font-weight="500">
+          Thanks for reading! If you like the work we do, feel free to <a
+            href="https://some-dono.link/">send us a cup of coffee</a
+          > to keep us up another night.
+        </p>
+      </Box>
+
+      <!-- Things will go here -->
     </column>
     <column class="members" self-="!basis">
+      <Box unpadded>
+        {#snippet top()}
+          <Badge variant="background0"><b>&lt; links.md &gt;</b></Badge>
+        {/snippet}
+
+        <PersonalLink
+          href="mailto:hello@eepy.engineering"
+          content="hello@eepy.engineering"
+          icon={faEnvelope}
+        />
+
+        <PersonalLink
+          href="https://ko-fi.com/eepyengineering"
+          content="Donate"
+          icon={faHeart}
+        />
+
+        <PersonalLink
+          href="https://discord.gg/gF3J5ZBSzZ"
+          content="Join our Community"
+        >
+          {#snippet icon()}
+            <Fa
+              icon={faDiscord}
+              translateY={0.15}
+              scale={0.9}
+              translateX={-0.1}
+            />
+          {/snippet}
+        </PersonalLink>
+      </Box>
+
       {@render member(
         "Founding Member",
         "/profile_pictures/rose.jpg",
@@ -139,34 +140,19 @@
         "Aubrey Taylor",
         "(she/her)",
         "/member/aubrey",
-        "Lorem ipsum dolor sit amet,",
-        "consectetur adipiscing elit.",
+        "Hands on learner and compulsive",
+        "system builder.",
       )}
     </column>
   </row>
 </column>
 
 <style>
-  .ようこぞ {
-    padding-left: 2ch;
-    padding-right: 2ch;
-    width: 100%;
-  }
-
-  .highlight-info > h1 {
+  .highlights h1 {
     font-size: calc(var(--font-size) * 2);
   }
 
-  .highlight-info {
-    padding: 1lh 2ch;
-    width: 100%;
-  }
-
   .member:hover {
-    background-color: var(--background1);
-  }
-
-  .highlight:hover {
     background-color: var(--background1);
   }
 
@@ -177,14 +163,12 @@
     overflow: hidden;
   }
 
-  .highlight > row {
-    padding: 0lh 1ch;
+  .member row {
     gap: 1ch;
   }
 
-  .member > row {
-    padding: 0lh 1ch;
-    gap: 1ch;
+  .member {
+    display: inherit;
   }
 
   .member img {
