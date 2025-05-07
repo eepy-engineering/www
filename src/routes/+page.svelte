@@ -10,6 +10,8 @@
   import PersonalLink from "$lib/component/personal_link.svelte";
 </script>
 
+<title>eepy.engineering</title>
+
 <Banner />
 
 {#snippet member(
@@ -74,7 +76,7 @@
 
         <p style:font-weight="500">
           Thanks for reading! If you like the work we do, feel free to <a
-            href="https://some-dono.link/">send us a cup of coffee</a
+            href="https://ko-fi.com/eepyengineering">send us a cup of coffee</a
           > to keep us up another night.
         </p>
       </Box>
@@ -87,11 +89,11 @@
           <Badge variant="background0"><b>&lt; links.md &gt;</b></Badge>
         {/snippet}
 
-        <PersonalLink
+        <!-- <PersonalLink
           href="mailto:hello@eepy.engineering"
           content="hello@eepy.engineering"
           icon={faEnvelope}
-        />
+        /> -->
 
         <PersonalLink
           href="https://ko-fi.com/eepyengineering"
@@ -130,8 +132,8 @@
         "Walter Min",
         "(he/him)",
         "/member/walter",
-        "Lorem ipsum dolor sit amet,",
-        "consectetur adipiscing elit.",
+        "Full-stack builder, from cells to",
+        "datacenters and all in-between.",
       )}
 
       {@render member(

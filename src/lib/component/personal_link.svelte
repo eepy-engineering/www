@@ -33,7 +33,7 @@
     {/if}
   </b>
 {:else}
-  <a class="link personal-link" href="https://bsky.app/profile/rose.hall.ly">
+  <a class="link personal-link" {href}>
     <span style:width="2ch">
       {#if icon !== undefined}
         {#if "icon" in icon}

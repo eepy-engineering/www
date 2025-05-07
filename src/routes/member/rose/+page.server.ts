@@ -1,4 +1,5 @@
 import { get_data } from "$lib/server/data";
+export const prerender = false;
 
 export async function load() {
   let data = get_data();

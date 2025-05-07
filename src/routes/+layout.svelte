@@ -33,6 +33,10 @@
     }
   }
 
+  :root {
+    --scanline-opacity: 0.6;
+  }
+
   .scanlines1 {
     position: sticky;
     top: 0;
@@ -44,6 +48,7 @@
     background-image: url(/overlay.png);
     background-repeat: all;
     background-position: 0px 0px;
+    opacity: var(--scanline-opacity);
     animation-name: Static;
     animation-duration: 2s;
     animation-iteration-count: infinite;
@@ -60,6 +65,7 @@
     background-image: url(/overlay2.png);
     background-repeat: all;
     background-position: 0px 0px;
+    opacity: var(--scanline-opacity);
     animation-name: Static;
     animation-duration: 0.8s;
     animation-iteration-count: infinite;

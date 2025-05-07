@@ -17,6 +17,10 @@
   const shift = isKeyDown("Shift");
 </script>
 
+<svelte:head>
+  <title>eepy.engineering - Walter</title>
+</svelte:head>
+
 <div class="rootwrapper">
   <column class="root">
     <Box>
@@ -89,6 +93,14 @@
           name="Walter Min"
           pronouns="he/him"
           role="Founding Member"
+          description="
+          Hi! I'm Walter. I'm a lifelong tinkerer, programmer, writer,
+          and too many other things to list. To that end, I've dabbled
+          in full-stack dev, embedded systems, networks, electrical engineering,
+          and fun (spooky) algorithms. When I learned that cells were machines too,
+          I programmed them with genes and pipettes. If you catch me on
+          the bus (do say hi!), I'll probably be exploring Wikipedia or
+          reading esoteric papers I have saved on my phone."
         />
         <column>
           <i style:width="100%" style:text-align="center">

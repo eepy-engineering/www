@@ -56,6 +56,10 @@
   const shift = isKeyDown("Shift");
 </script>
 
+<svelte:head>
+  <title>eepy.engineering - Rose</title>
+</svelte:head>
+
 <div class="rootwrapper">
   <column class="root">
     <Box>
