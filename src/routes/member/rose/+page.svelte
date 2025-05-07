@@ -77,27 +77,29 @@
             <Badge variant="background0">Now</Badge>
           {/snippet}
 
-          <PersonalLink width={20}>
-            {#snippet icon()}
-              <Fa
-                icon={faDiscord}
-                translateY={0.15}
-                scale={0.9}
-                translateX={-0.1}
-              />
-            {/snippet}
-            {#snippet content()}
-              {#if $data.discord_status == "online"}
-                <p class="now-item" style:color="#6dab7f">Online</p>
-              {:else if $data.discord_status == "idle"}
-                <p class="now-item" style:color="#d19e75">Idle</p>
-              {:else if $data.discord_status == "dnd"}
-                <p class="now-item" style:color="#de626b">Do Not Disturb</p>
-              {:else if $data.discord_status == "offline"}
-                <p class="now-item">Offline</p>
-              {/if}
-            {/snippet}
-          </PersonalLink>
+          {#if ["online", "idle", "dnd", "offline"].includes($data.discord_status)}
+            <PersonalLink width={20}>
+              {#snippet icon()}
+                <Fa
+                  icon={faDiscord}
+                  translateY={0.15}
+                  scale={0.9}
+                  translateX={-0.1}
+                />
+              {/snippet}
+              {#snippet content()}
+                {#if $data.discord_status == "online"}
+                  <p class="now-item" style:color="#6dab7f">Online</p>
+                {:else if $data.discord_status == "idle"}
+                  <p class="now-item" style:color="#d19e75">Idle</p>
+                {:else if $data.discord_status == "dnd"}
+                  <p class="now-item" style:color="#de626b">Do Not Disturb</p>
+                {:else if $data.discord_status == "offline"}
+                  <p class="now-item">Offline</p>
+                {/if}
+              {/snippet}
+            </PersonalLink>
+          {/if}
           <PersonalLink
             width={20}
             icon={faClock}

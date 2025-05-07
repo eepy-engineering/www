@@ -34,7 +34,11 @@
   }
 
   :root {
-    --scanline-opacity: 0.6;
+    /*
+      todo: calculate scanline opacity based on screen resolution
+      can cause eye strain on 1080p displays
+    */
+    --scanline-opacity: 0.4;
   }
 
   .scanlines1 {

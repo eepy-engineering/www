@@ -75,18 +75,6 @@
             icon={faLinkedin}
           />
         </Box>
-        <Box unpadded>
-          {#snippet top()}
-            <Badge variant="background0">Social</Badge>
-          {/snippet}
-
-          <PersonalLink
-            width={20}
-            href="https://x.com/saghetti0"
-            content={$shift ? "Twitter" : "X"}
-            icon={$shift ? faTwitter : faXTwitter}
-          />
-        </Box>
       </column>
       <column class="rhs">
         <MemberSummary

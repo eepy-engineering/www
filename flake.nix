@@ -23,23 +23,6 @@
         };
         formatter = pkgs.alejandra;
         packages = with pkgs; rec {
-          default = writeShellScriptBin ''run-eepy-site'' ''
-            ${nodejs_22}/bin/node ${js-package}/index.js
-          '';
-          dockerImage = let
-            pkgsLinux = import nixpkgs {system = "x86_64-linux";};
-          in
-            pkgs.dockerTools.buildLayeredImage {
-              name = "kokuzo.tailc38f.ts.net/eepy-site";
-              tag = "latest";
-
-              config = {
-                Cmd = ["${pkgsLinux.nodejs_22}/bin/node" "${js-package}/index.js"];
-                Volumes = {
-                  "/data" = {};
-                };
-              };
-            };
           js-package = stdenv.mkDerivation (finalAttrs: {
             pname = "eepy-site";
             version = "0.0.1";
@@ -65,6 +48,30 @@
               runHook postBuild
             '';
           });
+
+          pushDockerImage = writeShellScriptBin "push-docker-image" ''
+            sudo ${docker}/bin/docker image load -i ${dockerImage}
+            sudo ${docker}/bin/docker push kokuzo.tailc38f.ts.net/eepy-site:latest
+          '';
+          dockerImage = let
+            pkgsLinux = import nixpkgs {system = "x86_64-linux";};
+          in
+            pkgs.dockerTools.buildLayeredImage {
+              name = "kokuzo.tailc38f.ts.net/eepy-site";
+              tag = "latest";
+              config = {
+                Cmd = ["${pkgsLinux.nodejs_22}/bin/node" "${js-package}/index.js"];
+                Env = [
+                  "NODE_EXTRA_CA_CERTS=${pkgsLinux.cacert}/etc/ssl/certs/ca-bundle.crt"
+                ];
+                ExposedPorts = {
+                  "3000 su/tcp" = {};
+                };
+                Volumes = {
+                  "/data" = {};
+                };
+              };
+            };
         };
       }
     );
