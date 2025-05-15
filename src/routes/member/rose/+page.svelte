@@ -43,15 +43,15 @@
   let data = fetcher.getData(Date.now(), raw_data);
 
   let date = clock({ interval: 1000 });
-  let my_date = $derived($date.setZone($data.location_info.time_zone));
+  let my_date = $derived($date.setZone($data.time_zone));
   let my_location = $derived(
-    $data.location_info.time_zone.split("/")[1].replaceAll("_", " "),
+    $data.time_zone.split("/")[1].replaceAll("_", " "),
   );
-  let listening_duration = $derived(
-    $data.listening_to == undefined
-      ? undefined
-      : $date.diff(DateTime.fromMillis($data.listening_to.start_time)),
-  );
+  // let listening_duration = $derived(
+  //   $data.last_fm?.currently_playing == undefined
+  //     ? undefined
+  //     : $date.diff(DateTime.fromISO($data.last_fm.currently_playing.start_time)),
+  // );
 
   const shift = isKeyDown("Shift");
 </script>
@@ -77,29 +77,29 @@
             <Badge variant="background0">Now</Badge>
           {/snippet}
 
-          {#if ["online", "idle", "dnd", "offline"].includes($data.discord_status)}
-            <PersonalLink width={20}>
-              {#snippet icon()}
-                <Fa
-                  icon={faDiscord}
-                  translateY={0.15}
-                  scale={0.9}
-                  translateX={-0.1}
-                />
-              {/snippet}
-              {#snippet content()}
-                {#if $data.discord_status == "online"}
-                  <p class="now-item" style:color="#6dab7f">Online</p>
-                {:else if $data.discord_status == "idle"}
-                  <p class="now-item" style:color="#d19e75">Idle</p>
-                {:else if $data.discord_status == "dnd"}
-                  <p class="now-item" style:color="#de626b">Do Not Disturb</p>
-                {:else if $data.discord_status == "offline"}
-                  <p class="now-item">Offline</p>
-                {/if}
-              {/snippet}
-            </PersonalLink>
-          {/if}
+          <PersonalLink width={20}>
+            {#snippet icon()}
+              <Fa
+                icon={faDiscord}
+                translateY={0.15}
+                scale={0.9}
+                translateX={-0.1}
+              />
+            {/snippet}
+            {#snippet content()}
+              {#if $data.discord?.status == "online"}
+                <p class="now-item" style:color="#6dab7f">Online</p>
+              {:else if $data.discord?.status == "idle"}
+                <p class="now-item" style:color="#d19e75">Idle</p>
+              {:else if $data.discord?.status == "dnd"}
+                <p class="now-item" style:color="#de626b">Do Not Disturb</p>
+              {:else if $data.discord?.status == "offline"}
+                <p class="now-item">Offline</p>
+              {:else}
+                <p class="now-item">Loading</p>
+              {/if}
+            {/snippet}
+          </PersonalLink>
           <PersonalLink
             width={20}
             icon={faClock}
@@ -115,18 +115,18 @@
               <Fa icon={faLocationPin} translateY={0.15} translateX={0.1} />
             {/snippet}
           </PersonalLink>
-          {#if $data.listening_to !== undefined}
+          {#if $data.last_fm?.currently_playing != undefined}
             <PersonalLink
               width={20}
-              content={$data.listening_to.song_name}
+              content={$data.last_fm.currently_playing.name}
               icon={faItunesNote}
-              href={$data.listening_to.song_url}
+              href={$data.last_fm.currently_playing.url}
             />
             <PersonalLink
               width={20}
-              content={$data.listening_to.artist_name}
+              content={$data.last_fm.currently_playing.artist.name}
               icon={undefined}
-              href={$data.listening_to.song_url}
+              href={$data.last_fm.currently_playing.artist.url}
             />
           {/if}
         </Box>

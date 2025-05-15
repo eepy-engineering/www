@@ -38,6 +38,9 @@ importers:
       luxon:
         specifier: ^3.6.1
         version: 3.6.1
+      personal-api:
+        specifier: github:eepy-engineering/personal-api
+        version: https://codeload.github.com/eepy-engineering/personal-api/tar.gz/3c9cdca345704fb0e4290576ad242a37eea22c2d
       svelte-fa:
         specifier: ^4.0.3
         version: 4.0.3(svelte@5.16.0)
@@ -1194,6 +1197,10 @@ packages:
     resolution: {integrity: sha512-ypGJsmGtdXUOeM5u93TyeIEfEhM6s+ljAhrk5vAvSx8uyY/02OvrZnA0YNGUrPXfpJMgI1ODd3nwz8Npx4O4cg==}
     engines: {node: 20 || >=22}
 
+  personal-api@https://codeload.github.com/eepy-engineering/personal-api/tar.gz/3c9cdca345704fb0e4290576ad242a37eea22c2d:
+    resolution: {tarball: https://codeload.github.com/eepy-engineering/personal-api/tar.gz/3c9cdca345704fb0e4290576ad242a37eea22c2d}
+    version: 1.0.0
+
   picocolors@1.1.1:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
 
@@ -1370,6 +1377,11 @@ packages:
 
   typescript@5.7.2:
     resolution: {integrity: sha512-i5t66RHxDvVN40HfDd1PsEThGNnlMCMT3jMUuoh9/0TaqWevNontacunWyN02LA9/fIbEWlcHZcgTKb9QoaLfg==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+  typescript@5.8.3:
+    resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
     engines: {node: '>=14.17'}
     hasBin: true
 
@@ -2443,6 +2455,10 @@ snapshots:
       lru-cache: 11.1.0
       minipass: 7.1.2
 
+  personal-api@https://codeload.github.com/eepy-engineering/personal-api/tar.gz/3c9cdca345704fb0e4290576ad242a37eea22c2d:
+    dependencies:
+      typescript: 5.8.3
+
   picocolors@1.1.1: {}
 
   picomatch@4.0.2: {}
@@ -2650,6 +2666,8 @@ snapshots:
   tslib@2.8.1: {}
 
   typescript@5.7.2: {}
+
+  typescript@5.8.3: {}
 
   undici-types@6.21.0: {}
 

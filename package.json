@@ -35,6 +35,7 @@
 		"html-gl": "^0.3.2",
 		"html2canvas": "^1.4.1",
 		"luxon": "^3.6.1",
+		"personal-api": "github:eepy-engineering/personal-api",
 		"svelte-fa": "^4.0.3"
 	}
 }
