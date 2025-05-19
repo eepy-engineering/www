@@ -50,8 +50,8 @@
           });
 
           pushDockerImage = writeShellScriptBin "push-docker-image" ''
-            sudo ${docker}/bin/docker image load -i ${dockerImage}
-            sudo ${docker}/bin/docker push kokuzo.tailc38f.ts.net/eepy-site:latest
+            ${docker}/bin/docker image load -i ${dockerImage}
+            ${docker}/bin/docker push kokuzo.tailc38f.ts.net/eepy-site:latest
           '';
           dockerImage = let
             pkgsLinux = import nixpkgs {system = "x86_64-linux";};
