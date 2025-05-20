@@ -12,12 +12,35 @@
     faTwitter,
     faXTwitter,
   } from "@fortawesome/free-brands-svg-icons";
-  import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+  import { faClock, faEnvelope } from "@fortawesome/free-solid-svg-icons";
   import Fa from "svelte-fa";
   import MemberSummary from "../member_summary.svelte";
   import { isKeyDown } from "$lib/is_key_down";
+  import { DataFetcher } from "$lib/data_fetcher";
+  import { onMount } from "svelte";
+  import clock from "$lib/clock";
 
   const shift = isKeyDown("Shift");
+
+  let { data: raw_data } = $props();
+
+  let fetcher = DataFetcher.instance("/member/rose");
+
+  onMount(() => {
+    let unwatch = fetcher.watch();
+
+    return () => {
+      unwatch();
+    };
+  });
+
+  let data = fetcher.getData(Date.now(), raw_data);
+
+  let date = clock({ interval: 1000 });
+  let my_date = $derived($date.setZone($data.time_zone));
+  let my_location = $derived(
+    $data.time_zone.split("/")[1].replaceAll("_", " "),
+  );
 </script>
 
 <svelte:head>
@@ -36,6 +59,41 @@
           src="/profile_pictures/aubrey.png"
           alt="Aubrey's profile"
         />
+        <Box unpadded>
+          <PersonalLink width={20}>
+            {#snippet icon()}
+              <Fa
+                icon={faDiscord}
+                translateY={0.15}
+                scale={0.9}
+                translateX={-0.1}
+              />
+            {/snippet}
+            {#snippet content()}
+              {#if $data.discord?.status == "online"}
+                <p class="now-item" style:color="#6dab7f">Online</p>
+              {:else if $data.discord?.status == "idle"}
+                <p class="now-item" style:color="#d19e75">Idle</p>
+              {:else if $data.discord?.status == "dnd"}
+                <p class="now-item" style:color="#de626b">Do Not Disturb</p>
+              {:else if $data.discord?.status == "offline"}
+                <p class="now-item">Offline</p>
+              {:else}
+                <p class="now-item">Loading</p>
+              {/if}
+            {/snippet}
+          </PersonalLink>
+          <PersonalLink
+            width={20}
+            icon={faClock}
+            content={my_date.toLocaleString({
+              weekday: "short",
+              hour: "numeric",
+              minute: "2-digit",
+              second: "2-digit",
+            })}
+          />
+        </Box>
         <Box unpadded>
           {#snippet top()}
             <Badge variant="background0">Personal</Badge>
