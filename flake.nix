@@ -1,3 +1,4 @@
+# syntax = ghcr.io/reproducible-containers/buildkit-nix:v0.1.1@sha256:7d4c42a5c6baea2b21145589afa85e0862625e6779c89488987266b85e088021
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
@@ -22,6 +23,7 @@
           ];
         };
         formatter = pkgs.alejandra;
+        defaultPackage = packages.dockerImage;
         packages = with pkgs; rec {
           js-package = stdenv.mkDerivation (finalAttrs: {
             pname = "eepy-site";
@@ -50,8 +52,11 @@
           });
 
           pushDockerImage = writeShellScriptBin "push-docker-image" ''
-            ${docker}/bin/docker image load -i ${dockerImage}
-            ${docker}/bin/docker push kokuzo.tailc38f.ts.net/eepy-site:latest
+            ${img}/bin/img image load -i ${dockerImage}
+            ${img}/bin/img push kokuzo.tailc38f.ts.net/eepy-site:latest
+          '';
+          pushDockerImageActions = writeShellScriptBin "push-docker-image" ''
+            push-docker-image ${dockerImage}
           '';
           dockerImage = let
             pkgsLinux = import nixpkgs {system = "x86_64-linux";};
