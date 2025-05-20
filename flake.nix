@@ -52,6 +52,7 @@
           });
 
           pushDockerImageActions = writeShellScriptBin "push-docker-image" ''
+            echo "pushing ${self.rev}"
             push-docker-image ${dockerImage}
           '';
 
