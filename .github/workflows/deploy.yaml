@@ -9,7 +9,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - run: nix run -L '.#pushDockerImageActions'
-    - run: GIT_REV=${{ github.sha }} nu -c 'open .kube/version.yaml -r | from yaml | update value $"kokuzo.tailc38f.ts.net/eepy-site:($env.GIT_SHA)" | to yaml | save .kube/version.yaml -f'
+    - run: GIT_REV=${{ github.sha }} nu -c 'open .kube/version.yaml -r | from yaml | update value $"kokuzo.tailc38f.ts.net/eepy-site:${{ github.sha }}" | to yaml | save .kube/version.yaml -f'
     - run: |
         git config --global user.name 'GitHub Actions'
         git config --global user.email 'actions@github.com'
