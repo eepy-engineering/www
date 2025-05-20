@@ -51,19 +51,16 @@
             '';
           });
 
-          pushDockerImage = writeShellScriptBin "push-docker-image" ''
-            ${img}/bin/img image load -i ${dockerImage}
-            ${img}/bin/img push kokuzo.tailc38f.ts.net/eepy-site:latest
-          '';
           pushDockerImageActions = writeShellScriptBin "push-docker-image" ''
             push-docker-image ${dockerImage}
           '';
+
           dockerImage = let
             pkgsLinux = import nixpkgs {system = "x86_64-linux";};
           in
             pkgs.dockerTools.buildLayeredImage {
               name = "kokuzo.tailc38f.ts.net/eepy-site";
-              tag = "latest";
+              tag = self.rev;
               config = {
                 Cmd = ["${pkgsLinux.nodejs_22}/bin/node" "${js-package}/index.js"];
                 Env = [
