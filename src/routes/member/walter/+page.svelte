@@ -81,8 +81,7 @@
           name="Walter Min"
           pronouns="he/him"
           role="Founding Member"
-          description="
-          Hi! I'm Walter. I'm a lifelong tinkerer, programmer, writer,
+          description="Hi! I'm Walter. I'm a lifelong tinkerer, programmer, writer,
           and too many other things to list. To that end, I've dabbled
           in full-stack dev, embedded systems, networks, electrical engineering,
           and fun (spooky) algorithms. When I learned that cells were machines too,
