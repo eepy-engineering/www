@@ -58,12 +58,30 @@
 
           dockerImage = let
             pkgsLinux = import nixpkgs {system = "x86_64-linux";};
+            # Node's own build of 22.23.4, which fixes CVE-2026-111497 (an
+            # out-of-bounds write in its Brotli decoder); this nixpkgs has 22.14.0.
+            nodejs = pkgsLinux.stdenv.mkDerivation (finalAttrs: {
+              pname = "nodejs";
+              version = "22.23.4";
+              src = pkgsLinux.fetchurl {
+                url = "https://nodejs.org/dist/v${finalAttrs.version}/node-v${finalAttrs.version}-linux-x64.tar.xz";
+                sha256 = "1805bcd35e6815559bd2eb97db438d3fdb0eb3a5e6a977b7c1badca76337e9ce";
+              };
+              nativeBuildInputs = [pkgsLinux.autoPatchelfHook];
+              buildInputs = [pkgsLinux.stdenv.cc.cc.lib];
+              installPhase = ''
+                runHook preInstall
+                mkdir -p $out/bin
+                cp bin/node $out/bin/
+                runHook postInstall
+              '';
+            });
           in
             pkgs.dockerTools.buildLayeredImage {
               name = "kokuzo.tailc38f.ts.net/eepy-site";
               tag = self.rev;
               config = {
-                Cmd = ["${pkgsLinux.nodejs_22}/bin/node" "${js-package}/index.js"];
+                Cmd = ["${nodejs}/bin/node" "${js-package}/index.js"];
                 Env = [
                   "NODE_EXTRA_CA_CERTS=${pkgsLinux.cacert}/etc/ssl/certs/ca-bundle.crt"
                 ];
