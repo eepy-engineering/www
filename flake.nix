@@ -60,6 +60,8 @@
             pkgsLinux = import nixpkgs {system = "x86_64-linux";};
             # Node's own build of 22.23.4, which fixes CVE-2026-111497 (an
             # out-of-bounds write in its Brotli decoder); this nixpkgs has 22.14.0.
+            # Only its interpreter is patched (patchelf --set-rpath leaves it
+            # segfaulting), so libstdc++ comes by LD_LIBRARY_PATH.
             nodejs = pkgsLinux.stdenv.mkDerivation (finalAttrs: {
               pname = "nodejs";
               version = "22.23.4";
@@ -67,12 +69,15 @@
                 url = "https://nodejs.org/dist/v${finalAttrs.version}/node-v${finalAttrs.version}-linux-x64.tar.xz";
                 sha256 = "1805bcd35e6815559bd2eb97db438d3fdb0eb3a5e6a977b7c1badca76337e9ce";
               };
-              nativeBuildInputs = [pkgsLinux.autoPatchelfHook];
-              buildInputs = [pkgsLinux.stdenv.cc.cc.lib];
+              nativeBuildInputs = [pkgsLinux.makeBinaryWrapper];
+              dontStrip = true;
+              dontPatchELF = true;
               installPhase = ''
                 runHook preInstall
-                mkdir -p $out/bin
-                cp bin/node $out/bin/
+                install -Dm755 bin/node $out/libexec/node
+                patchelf --set-interpreter ${pkgsLinux.stdenv.cc.bintools.dynamicLinker} $out/libexec/node
+                makeWrapper $out/libexec/node $out/bin/node \
+                  --prefix LD_LIBRARY_PATH : ${pkgsLinux.lib.makeLibraryPath [pkgsLinux.stdenv.cc.cc.lib]}
                 runHook postInstall
               '';
             });
